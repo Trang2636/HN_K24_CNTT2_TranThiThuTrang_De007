@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: brand-service
+              uri: lb://brand-service
+              predicates:
+                - Path=/api/brands/**
+            - id: phone-service
+              uri: lb://phone-service
+              predicates:
+                - Path=/api/phones/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
